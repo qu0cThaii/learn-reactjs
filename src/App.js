@@ -1,7 +1,12 @@
-import "./App.css";
+import TodoFeature from "./features/Todo/index";
 
 function App() {
-  return <div className="App">qu0cThaiidinh</div>;
+  return (
+    <div className="App">
+      {/* <AlbumFeature /> */}
+      <TodoFeature />
+    </div>
+  );
 }
 
 export default App;
