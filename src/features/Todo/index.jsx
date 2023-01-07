@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import TodoList from "./components/TodoList/index";
 import PostList from "./../PostList/index";
 import Pagination from "./page/index";
+import Clock from "../Clock";
+import SearchForm from "../SearchForm";
+import queryString from "query-string";
 
 TodoFeature.propTypes = {};
 
@@ -41,13 +44,19 @@ function TodoFeature(props) {
   const [postList, setPostList] = useState([]);
   const [pagination, setPagination] = useState({
     _page: 1,
-    totalCount: 1,
+    _limit: 10,
+    _totalRow: 1,
   });
-  const [currentPage, setCurrenPage] = useState("1");
+
+  const [currentPage, setCurrenPage] = useState({
+    _limit: 10,
+    _page: 1,
+  });
 
   useEffect(() => {
     async function fetchPostList() {
-      const requestUrl = `http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=${currentPage}`;
+      const paramString = queryString.stringify(currentPage);
+      const requestUrl = `http://js-post-api.herokuapp.com/api/posts?${paramString}`;
 
       const response = await fetch(requestUrl);
       const responseJSON = await response.json();
@@ -58,16 +67,21 @@ function TodoFeature(props) {
     fetchPostList();
   }, [currentPage]);
 
-  //viet funtion co parameter la page, sau khi xu li thi dung nay de set lai state
-  // function changePage(page) {
-  //   setCurrenPage(page);
-  // }
-  // console.log(currentPage);
   function handlePageChange(newPage) {
     console.log("New Page:", newPage);
-    setCurrenPage(newPage);
+    setCurrenPage({
+      ...currentPage,
+      _page: newPage,
+    });
   }
-
+  function handleFormSubmit(filter) {
+    console.log("filter", filter);
+    setCurrenPage({
+      ...currentPage,
+      _page: 1,
+      title_like: filter.searchTerm,
+    });
+  }
   return (
     <>
       <div>
@@ -94,6 +108,8 @@ function TodoFeature(props) {
       </div>
       <div>
         <Pagination pagination={pagination} onPageChange={handlePageChange} />
+        <Clock />
+        <SearchForm onSubmit={handleFormSubmit} />
       </div>
     </>
   );
