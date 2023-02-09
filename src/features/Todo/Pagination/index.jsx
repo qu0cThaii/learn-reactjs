@@ -39,8 +39,12 @@ function Pagination(props) {
   }
 
   return (
-    <>
-      <button disabled={_page <= 1} onClick={() => handlePageChange(_page - 1)}>
+    <div className="page">
+      <button
+        className="previous_page"
+        disabled={_page <= 1}
+        onClick={() => handlePageChange(_page - 1)}
+      >
         Trang truoc
       </button>
 
@@ -48,6 +52,7 @@ function Pagination(props) {
         <ul className="showPageNumber">
           {pageNumber.map((detailPage) => (
             <li
+              className="detailpage"
               key={detailPage}
               onClick={() => handleDetailPageChange(detailPage)}
             >
@@ -58,12 +63,13 @@ function Pagination(props) {
       </div>
 
       <button
+        className="next_page"
         disabled={_page >= totalPages}
         onClick={() => handlePageChange(_page + 1)}
       >
         Trang sau
       </button>
-    </>
+    </div>
   );
 }
 

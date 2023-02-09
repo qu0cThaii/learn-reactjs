@@ -1,10 +1,28 @@
+
+
+
+.page {
+  display:flex;
+  flex-direction: row;
+  padding: 0;
+}
+
 .showPageNumber {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    ;
+    padding: 0;
+    margin: 0;
   }
-.showPageNumber li{
-  text-decoration: none;
+.detailpage{
+  list-style-type:  none;
+  margin: 20px;
+  padding: 0;
+  cursor: pointer;
+
+}
+.detailpage:hover {
+  background-color: aqua;
+  
 }
  
