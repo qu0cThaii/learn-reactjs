@@ -1,0 +1,10 @@
+.showPageNumber {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    ;
+  }
+.showPageNumber li{
+  text-decoration: none;
+}
+ 

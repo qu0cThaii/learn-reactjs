@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import "./style.css";
 
 Pagination.propTypes = {
   pagination: PropTypes.object.isRequired,
@@ -8,10 +9,10 @@ Pagination.propTypes = {
 //
 
 function Pagination(props) {
-  const { pagination, onPageChange } = props;
+  const { pagination, onPageChange, onDetailPageChange } = props;
   const { _page, _limit, _totalRows } = pagination;
   const totalPages = Math.ceil(_totalRows / _limit);
-
+  const pageNumber = [];
   //totalCount =tổng số data trong source,
   //totalPage = tổng số data/data mỗi trang
 
@@ -24,14 +25,37 @@ function Pagination(props) {
       onPageChange(newPage);
     }
   }
+  function handleDetailPageChange(detailPage) {
+    onDetailPageChange(detailPage);
+  }
   // function Items({currentPage}){
   //   return {currentPage.map((item))}
   // }
+
+  //viet 1 function khac cho viec hien thi so page o giua
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumber.push(i);
+  }
+
   return (
     <>
       <button disabled={_page <= 1} onClick={() => handlePageChange(_page - 1)}>
         Trang truoc
       </button>
+
+      <div>
+        <ul className="showPageNumber">
+          {pageNumber.map((detailPage) => (
+            <li
+              key={detailPage}
+              onClick={() => handleDetailPageChange(detailPage)}
+            >
+              {detailPage}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <button
         disabled={_page >= totalPages}

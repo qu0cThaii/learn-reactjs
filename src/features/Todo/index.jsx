@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TodoList from "./components/TodoList/index";
 import PostList from "./../PostList/index";
-import Pagination from "./page/index";
+import Pagination from "./Pagination/index";
 import Clock from "../Clock";
-import SearchForm from "../SearchForm";
 import queryString from "query-string";
+import FillterForm from "../FillterForm/index";
 
 TodoFeature.propTypes = {};
 
@@ -74,12 +74,18 @@ function TodoFeature(props) {
       _page: newPage,
     });
   }
-  function handleFormSubmit(filter) {
-    console.log("filter", filter);
+  function handleDetailPageChange(detailpage) {
+    console.log(detailpage);
+    setCurrenPage({
+      ...currentPage,
+      _page: detailpage,
+    });
+  }
+  function handleFormSubmit(searchTerm) {
     setCurrenPage({
       ...currentPage,
       _page: 1,
-      title_like: filter.searchTerm,
+      title_like: searchTerm,
     });
   }
   return (
@@ -107,9 +113,13 @@ function TodoFeature(props) {
         {/* totalPage => render ra button */}
       </div>
       <div>
-        <Pagination pagination={pagination} onPageChange={handlePageChange} />
+        <Pagination
+          pagination={pagination}
+          onPageChange={handlePageChange}
+          onDetailPageChange={handleDetailPageChange}
+        />
         <Clock />
-        <SearchForm onSubmit={handleFormSubmit} />
+        <FillterForm onSubmit={handleFormSubmit} />
       </div>
     </>
   );
